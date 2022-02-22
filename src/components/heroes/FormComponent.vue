@@ -9,14 +9,26 @@
         id=""
         aria-describedby="helpId"
         placeholder=""
-        v-model="heroName"
+        v-model="hero.name"
+      />
+    </div>
+        <div class="form-group">
+      <label for="">Hero Alias</label>
+      <input
+        type="text"
+        class="form-control"
+        name=""
+        id=""
+        aria-describedby="helpId"
+        placeholder=""
+        v-model="hero.alias"
       />
     </div>
     <button
       type="button"
       class="btn btn-primary mt-3"
       @click="addHero()"
-      :disabled="heroName.length === 0"
+      :disabled="hero.name.length === 0"
     >
       Add Hero
     </button>
@@ -24,17 +36,18 @@
 </template>
 
 <script>
+import {Hero} from '../../models/Hero';
 export default {
   name: "FormComponent",
   data() {
     return {
-      heroName: '',
+      hero: new Hero(),
     };
   },
   methods: {
     addHero() {
-        this.$emit("onAddHero", this.heroName);
-        this.heroName = "";
+        this.$emit("onAddHero", this.hero);
+        this.hero = new Hero();
         },
   },
 };
