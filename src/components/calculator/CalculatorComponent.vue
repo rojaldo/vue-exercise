@@ -2,7 +2,7 @@
   <table class="calculator">
     <tr>
       <td colspan="3">
-          <div class="display-box">{{display}}</div>
+        <DisplayComponent :myDisplay="display"></DisplayComponent>
         <!-- <input class="display-box" type="text" id="result" disabled /> -->
       </td>
       <!-- clearScreen() function clear all the values -->
@@ -11,89 +11,43 @@
           class="button"
           type="button"
           value="C"
-          @click="clearScreen()"
+          @click="clearCalculator()"
           style="background-color: #fb0066"
         />
       </td>
     </tr>
-    <tr>
-      <!-- handleClick() function display the value of clicked button -->
-      <td>
-        <input class="button" type="button" value="1" @click="handleClick('1')" />
-      </td>
-      <td>
-        <input class="button" type="button" value="2" @click="handleClick('2')" />
-      </td>
-      <td>
-        <input class="button" type="button" value="3" @click="handleClick('3')" />
-      </td>
-      <td>
-        <input class="button" type="button" value="/" @click="handleClick('/')" />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input class="button" type="button" value="4" @click="handleClick('4')" />
-      </td>
-      <td>
-        <input class="button" type="button" value="5" @click="handleClick('5')" />
-      </td>
-      <td>
-        <input class="button" type="button" value="6" @click="handleClick('6')" />
-      </td>
-      <td>
-        <input class="button" type="button" value="-" @click="handleClick('-')" />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input class="button" type="button" value="7" @click="handleClick('7')" />
-      </td>
-      <td>
-        <input class="button" type="button" value="8" @click="handleClick('8')" />
-      </td>
-      <td>
-        <input class="button" type="button" value="9" @click="handleClick('9')" />
-      </td>
-      <td>
-        <input class="button" type="button" value="+" @click="handleClick('+')" />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input class="button" type="button" value="." @click="handleClick('.')" />
-      </td>
-      <td>
-        <input class="button" type="button" value="0" @click="handleClick('0')" />
-      </td>
-      <!-- calculate() function evaluate the mathematical expression -->
-      <td>
-        <input
-          class="button"
-          type="button"
-          value="="
-          @click="handleClick('=')"
-          style="background-color: #fb0066"
-        />
-      </td>
-      <td>
-        <input class="button" type="button" value="*" @click="handleClick('*')" />
-      </td>
-    </tr>
+    <KeyboardComponent @onKey="handleClick($event)"></KeyboardComponent>
   </table>
 </template>
 
 <script>
+import { Calculator } from '../../models/Calculator';
+import DisplayComponent from './DisplayComponent.vue';
+import KeyboardComponent from './KeyboardComponent.vue';
 export default {
   name: "CalculatorComponent",
   data() {
     return {
       display: "",
+      calculator: new Calculator()
     };
+  },
+  components: {
+    DisplayComponent,
+    KeyboardComponent
   },
   methods: {
     handleClick(value) {
-      this.display += value;
+      if (typeof value === "number") {
+        this.calculator.handleNumber(value);
+      } else if (typeof value === "string") {
+        this.calculator.handleSymbol(value);
+      }
+      this.display = this.calculator.display;
+    },
+    clearCalculator() {
+      this.display = "";
+      this.calculator.clear();
     },
   },
 };
@@ -109,15 +63,6 @@ export default {
   margin: auto;
   background-color: #191b28;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-}
-.display-box {
-  font-family: "Orbitron", sans-serif;
-  background-color: #dcdbe1;
-  border: solid black 0.5px;
-  color: black;
-  border-radius: 5px;
-  width: 100%;
-  height: 65%;
 }
 .button {
   font-family: "Orbitron", sans-serif;
@@ -135,4 +80,5 @@ export default {
   -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
   box-shadow: inset 0px 0px 5px #c1c1c1;
 }
+
 </style>
