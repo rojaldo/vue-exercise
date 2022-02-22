@@ -1,19 +1,25 @@
 <template>
   <div id="app">
-    <CalculatorComponent></CalculatorComponent>
+    <b-tabs content-class="mt-3">
+      <b-tab title="Calculator" ><CalculatorComponent></CalculatorComponent></b-tab>
+      <b-tab title="Heroes" :active="true"><HeroesComponent></HeroesComponent></b-tab>
+    </b-tabs>
+    
   </div>
 </template>
 
 <script>
-import CalculatorComponent from './components/calculator/CalculatorComponent.vue';
+import CalculatorComponent from "./components/calculator/CalculatorComponent.vue";
+import HeroesComponent from "./components/heroes/HeroesComponent.vue";
+
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    CalculatorComponent
-  }
-}
+    CalculatorComponent,
+    HeroesComponent
+  },
+};
 </script>
 
 <style>
-
 </style>
