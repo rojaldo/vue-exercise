@@ -11,7 +11,18 @@
     <div class="jumbotron">
       <h1 class="display-3">{{ apod.title }}</h1>
       <p class="lead">{{ apod.date }}</p>
-      <img :src="apod.url" :alt="apod.title" class="d-flex mx-auto" />
+      <img
+        :src="apod.url"
+        :alt="apod.title"
+        class="d-flex mx-auto"
+        v-if="apod.media_type === 'image'"
+      />
+      <youtube
+        class="d-flex mx-auto"
+        v-if="apod.media_type === 'video'"
+        :video-id="videoID"
+        :player-vars="playerVars"
+      ></youtube>
       <hr class="my-2" />
       <p>{{ apod.explanation }}</p>
       <p class="lead">
@@ -29,8 +40,11 @@ export default {
   data() {
     return {
       apod: {},
-      // today date in the format YYYY-MM-DD
       selectedDate: new Date().toISOString().slice(0, 10),
+      // videoId: "lG0Ys-2d4MA",
+      playerVars: {
+        autoplay: 1,
+      },
     };
   },
   created() {
@@ -43,9 +57,9 @@ export default {
       this.getApod(this.selectedDate);
     },
     getApod(date = "") {
-        const baseURL = "https://api.nasa.gov/planetary/apod";
-        const apiKey = "DEMO_KEY";
-        const url = `${baseURL}?api_key=${apiKey}&date=${date}`;
+      const baseURL = "https://api.nasa.gov/planetary/apod";
+      const apiKey = "DEMO_KEY";
+      const url = `${baseURL}?api_key=${apiKey}&date=${date}`;
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
@@ -53,6 +67,17 @@ export default {
         });
     },
   },
+  computed: {
+    // a computed getter
+    videoID() {
+      // `this` points to the vm instance
+      // get id from https://www.youtube.com/embed/liapnqj9GDc?rel=0
+        let res = this.apod.url.split("embed/")[1]
+        res = res.split("?")[0]
+        return res;
+    }
+  }
+
 };
 </script>
 
