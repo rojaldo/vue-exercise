@@ -5,12 +5,12 @@
 <script>
 export default {
   name: "DisplayComponent",
-  data() {
-    return {
-      display: "",
-    };
+  props: {
+    myDisplay: {
+      type: String,
+      required: true,
+    },
   },
-  props: ["myDisplay"],
 };
 </script>
 
