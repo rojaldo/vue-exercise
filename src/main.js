@@ -12,9 +12,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 // main.js
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
+import router from './router'
 
 Vue.component('VueSlider', VueSlider)
- 
+
 Vue.use(VueYoutube)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -24,5 +25,6 @@ Vue.config.productionTip = false
 
 
 new Vue({
-  render: h => h(App),
+  router,
+  render: h => h(App)
 }).$mount('#app')

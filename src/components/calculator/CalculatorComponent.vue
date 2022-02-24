@@ -50,6 +50,9 @@ export default {
       this.calculator.clear();
     },
   },
+  destroyed() {
+    console.log("CalculatorComponent destroyed");
+  },
 };
 </script>
 
