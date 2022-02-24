@@ -26,7 +26,7 @@ const routes = [
   {
     path: '/beers',
     name: 'Beers',
-    component: () => import('../components/beers/BeersComponent')
+    component: () => import('../components/beers/BeersContainer')
   }
 
 

@@ -34,8 +34,14 @@ export default {
       beers: [],
       range: [3, 5],
     };
+  },props: {
+    inputRange: {
+      type: Array,
+      required: true,
+    },
   },
   created() {
+    this.range = this.inputRange;
     this.getBeers();
   },
   methods: {
@@ -52,6 +58,11 @@ export default {
       return this.beers.filter(
         (beer) => beer.abv >= this.range[0] && beer.abv <= this.range[1]
       ).sort((a, b) => a.abv - b.abv);
+    },
+  },
+  watch: {
+    range(newRange) {
+      this.$emit("onRange", newRange);
     },
   },
   components: {},
