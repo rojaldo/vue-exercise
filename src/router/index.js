@@ -16,7 +16,7 @@ const routes = [
   {
     path: '/heroes',
     name: 'Heroes',
-    component: () => import('../components/heroes/HeroesComponent')
+    component: () => import('../components/heroes/HeroesContainer')
   },
   {
     path: '/apod',

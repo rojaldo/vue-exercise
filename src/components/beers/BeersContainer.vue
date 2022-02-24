@@ -1,5 +1,5 @@
 <template>
-  <BeersComponent :inputRange="range" @onRange="handleRange($event)"></BeersComponent>
+  <BeersComponent :inputRange="range" :inputBeers="beers" @onRange="handleRange($event)"></BeersComponent>
 </template>
 
 <script>
@@ -15,9 +15,17 @@ export default {
       store: useStore(),
     };
   },
+  created() {
+    // get beers
+    this.$store.dispatch("fetchBeers").then((beers) => {
+      this.beers = beers;
+    });
+
+  },
   data() {
     return {
       range: this.$store.getters.getRange,
+      beers: []
     };
   },
   methods:{

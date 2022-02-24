@@ -39,19 +39,14 @@ export default {
       type: Array,
       required: true,
     },
+    inputBeers: {
+      type: Array,
+      required: true,
+    },
   },
   created() {
     this.range = this.inputRange;
-    this.getBeers();
-  },
-  methods: {
-    getBeers() {
-      fetch("https://api.punkapi.com/v2/beers")
-        .then((response) => response.json())
-        .then((data) => {
-          this.beers = data;
-        });
-    },
+    this.beers = this.inputBeers;
   },
   computed: {
     showBeers() {
@@ -63,6 +58,9 @@ export default {
   watch: {
     range(newRange) {
       this.$emit("onRange", newRange);
+    },
+    inputBeers(newBeers) {
+      this.beers = newBeers;
     },
   },
   components: {},

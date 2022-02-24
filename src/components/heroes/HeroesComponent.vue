@@ -9,24 +9,30 @@
 <script>
 import ListComponent from "./ListComponent.vue";
 import FormComponent from "./FormComponent.vue";
-import { Hero } from '../../models/Hero';
+// import { Hero } from '../../models/Hero';
 export default {
   name: "HeroesComponent",
   data() {
     return {
-      heroes: [
-          new Hero("Superman", "Clark Kent"), 
-          new Hero("Batman", "Bruce Wayne"),
-          new Hero("Spiderman", "Peter Parker"),],
+      heroes: [],
     };
+  },
+  props:{
+    inputHeroes: {
+      type: Array,
+      required: true,
+    },
   },
   components: {
     ListComponent,
     FormComponent,
   },
+  created() {
+    this.heroes = this.inputHeroes;
+  },
   methods: {
     addHero(hero) {
-      this.heroes.push(hero);
+      this.$emit("onAddHero", hero);
     },
   },
 };
