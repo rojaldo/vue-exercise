@@ -13,12 +13,16 @@ export default new Vuex.Store({
       list: [
         new Hero("Superman", "Clark Kent"),
         new Hero("Batman", "Bruce Wayne")],
+    },
+    apod: {
+      data: {}
     }
   },
   getters: {
     getRange: state => state.beers.range,
     getHeroes: state => state.heroes.list,
-    getBeers: state => state.beers.beers
+    getBeers: state => state.beers.beers,
+    getApod: state => state.apod.data
   },
   mutations: {
     setRange: (state, payload) => {
@@ -32,6 +36,10 @@ export default new Vuex.Store({
     },
     updateListHeroes: (state, payload) => {
       state.heroes.list = payload
+    },
+    setApod: (state, payload) => {
+      console.log('setApod: ', payload);
+      state.apod.data = payload
     }
   },
   actions: {
@@ -48,6 +56,21 @@ export default new Vuex.Store({
         // return Promise
       }
       return Promise.resolve(beers)
+    },
+    async fetchApod({ commit }, date = '') {
+      let apod = this.getters.getApod
+
+      console.log("Fetching apod...");
+      const baseURL = "https://api.nasa.gov/planetary/apod";
+      const apiKey = "tqz634Z1x0LiJzjbhSyUoExrZaGKLM0MG1VnROR6";
+      const url = `${baseURL}?api_key=${apiKey}&date=${date}`;
+      const response = await fetch(url)
+      apod = await response.json()
+      commit('setApod', apod)
+
+
+      // return Promise
+      return Promise.resolve(apod)
     }
   },
   modules: {

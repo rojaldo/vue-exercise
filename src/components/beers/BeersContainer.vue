@@ -4,16 +4,11 @@
 
 <script>
 import BeersComponent from "./BeersComponent.vue";
-import { useStore } from "vuex";
+
 export default {
   name: "BeersContainer",
   components: {
     BeersComponent,
-  },
-  setup() {
-    return {
-      store: useStore(),
-    };
   },
   created() {
     // get beers

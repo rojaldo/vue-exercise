@@ -21,7 +21,7 @@ const routes = [
   {
     path: '/apod',
     name: 'Apod',
-    component: () => import('../components/apod/ApodComponent')
+    component: () => import('../components/apod/ApodContainer')
   },
   {
     path: '/beers',

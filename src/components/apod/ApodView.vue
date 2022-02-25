@@ -1,22 +1,22 @@
 <template>
   <div class="jumbotron">
-    <h1 class="display-3">{{ data.title }}</h1>
+    <h1 class="display-3">{{ apod.title }}</h1>
     <p class="lead">{{selectedDate}}</p>
     
     <img
-      :src="data.url"
-      :alt="data.title"
+      :src="apod.url"
+      :alt="apod.title"
       class="d-flex mx-auto"
-      v-if="data.media_type === 'image'"
+      v-if="apod.media_type === 'image'"
     />
     <youtube
       class="d-flex mx-auto"
-      v-if="data.media_type === 'video'"
+      v-if="apod.media_type === 'video'"
       :video-id="videoID"
       :player-vars="playerVars"
     ></youtube>
     <hr class="my-2" />
-    <p>{{ data.explanation }}</p>
+    <p>{{ apod.explanation }}</p>
     <p class="lead">
       <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button"
         >Jumbo action name</a
@@ -48,24 +48,12 @@ export default {
   },
   created() {
     console.log("ApodView created");
-    this.getApod();
-  },
-  methods: {
-    getApod(date = "") {
-      const baseURL = "https://api.nasa.gov/planetary/apod";
-      const apiKey = "DEMO_KEY";
-      const url = `${baseURL}?api_key=${apiKey}&date=${date}`;
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          this.data = data;
-        });
-    },
+    // this.getApod();
   },
   watch: {
-    selectedDate(newDate) {
-      this.getApod(newDate);
-    },
+    // selectedDate(newDate) {
+    //   // this.getApod(newDate);
+    // },
   },
 };
 </script>
